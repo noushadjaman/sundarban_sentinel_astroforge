@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sundarban Sentinel • Team AstroForge • Hack For Humanity 2026 Presentation Deck</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #ffffff;
+      color: #0f172a;
+      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1.5px solid #e2e8f0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-wrap img {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .brand-text h1 {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: #0284c7;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    button:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    button.primary {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+    }
+
+    button.primary:hover {
+      background: #0369a1;
+    }
+
+    .viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .slide-stage-card {
+      width: 100%;
+      max-width: 1440px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 0 0 1px #e2e8f0;
+      background: #ffffff;
+    }
+
+    .slide-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .slide-img.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Bottom Navigation Tabs */
+    .slide-tabs-wrap {
+      max-width: 1440px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      justify-content: center;
+    }
+
+    .slide-tab-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .slide-tab-btn:hover {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .slide-tab-btn.active {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    /* Presenter Notes Box */
+    .notes-drawer {
+      max-width: 1440px;
+      width: 100%;
+      margin-top: 18px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .notes-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0284c7;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .notes-content {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #334155;
+      white-space: pre-line;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand-wrap">
+      <img src="project_assets/astroforge_badge_sq.png" alt="AstroForge">
+      <div class="brand-text">
+        <h1>Sundarban Sentinel • Hack For Humanity 2026</h1>
+        <p>Team AstroForge: Md Nushad Jaman Raj • Tanjid Hossen Rifat • Raf Rafin Mahmud</p>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button id="prevBtn">◀ Prev</button>
+      <span id="counter" style="font-weight: 800; font-size: 13px; font-family: 'JetBrains Mono'; min-width: 60px; text-align: center;">1 / 8</span>
+      <button id="nextBtn">Next ▶</button>
+      <button id="toggleNotesBtn">📝 Toggle Notes</button>
+      <button class="primary" id="fullscreenBtn">⛶ Fullscreen</button>
+    </div>
+  </header>
+
+  <div class="viewport">
+    <div class="slide-stage-card" id="stageCard">
+      <img src="project_assets/hackathon_slides/slide_1_title_astroforge.png" class="slide-img active" alt="Slide 1: Title & Team AstroForge">
+      <img src="project_assets/hackathon_slides/slide_news_crisis_overview.png" class="slide-img" alt="Slide 2: The Urgent Ecological Crisis">
+      <img src="project_assets/hackathon_slides/slide_topic_1_offline_terminal.png" class="slide-img" alt="Slide 3: Topic 1 - 100% Offline Terminal Mode">
+      <img src="project_assets/hackathon_slides/slide_topic_2_edge_ai_species.png" class="slide-img" alt="Slide 4: Topic 2 - AI Species Legal Verification">
+      <img src="project_assets/hackathon_slides/slide_topic_3_general_people_usecase.png" class="slide-img" alt="Slide 5: Topic 3 - Citizen Net Checks & Rescue">
+      <img src="project_assets/hackathon_slides/slide_topic_4_nasa_deforestation.png" class="slide-img" alt="Slide 6: Topic 4 - NASA Satellite Deforestation Radar">
+      <img src="project_assets/hackathon_slides/slide_topic_5_cellular_sync.png" class="slide-img" alt="Slide 7: Topic 5 - Cellular Handshake & Auto-Sync">
+      <img src="project_assets/hackathon_slides/slide_8_architecture_team.png" class="slide-img" alt="Slide 8: Production Architecture & Impact">
+    </div>
+
+    <!-- Clickable Slide Selectors -->
+    <div class="slide-tabs-wrap">
+      <button class="slide-tab-btn active" data-index="0">1. Title & Team</button>
+      <button class="slide-tab-btn" data-index="1">2. Ground Reality & News</button>
+      <button class="slide-tab-btn" data-index="2">3. Offline Terminal Mode</button>
+      <button class="slide-tab-btn" data-index="3">4. AI Species Verification</button>
+      <button class="slide-tab-btn" data-index="4">5. Citizen Net Checks</button>
+      <button class="slide-tab-btn" data-index="5">6. NASA Deforestation Radar</button>
+      <button class="slide-tab-btn" data-index="6">7. Cellular Auto-Sync</button>
+      <button class="slide-tab-btn" data-index="7">8. Architecture & Team</button>
+    </div>
+
+    <!-- Presenter Notes Box -->
+    <div class="notes-drawer" id="notesDrawer">
+      <div class="notes-header">
+        <span class="notes-title">🎙️ Presenter Script & Cue Notes</span>
+        <span style="font-size: 11.5px; color: #64748b; font-weight: 600;">PowerPoint Deck Sync</span>
+      </div>
+      <div class="notes-content" id="notesText"></div>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide-img');
+    const tabs = document.querySelectorAll('.slide-tab-btn');
+    const counter = document.getElementById('counter');
+    const notesText = document.getElementById('notesText');
+    const notesDrawer = document.getElementById('notesDrawer');
+    const stageCard = document.getElementById('stageCard');
+
+    const presenterNotes = [
+      `SLIDE 1 TALKING POINTS (TEAM ASTROFORGE):\n• Welcome judges of Hack For Humanity 2026. We are Team AstroForge (Md Nushad Jaman Raj, Tanjid Hossen Rifat, Raf Rafin Mahmud).\n• Today we present Sundarban Sentinel: a 100% production-ready, zero-mock distributed conservation system.\n• The Sundarbans is a 10,000 km² UNESCO World Heritage mangrove forest protecting over 30 million people from cyclones.\n• However, it is a complete cellular void with 0 bars of mobile connectivity.\n• Our solution bridges this gap with on-device INT8 computer vision, live NASA Earthdata feeds, and resilient auto-sync.`,
+      
+      `SLIDE 2 TALKING POINTS (PROBLEM STATEMENT & INVESTIGATIVE EVIDENCE):\n• Verified investigative reports from The Business Standard and Dhaka Tribune document acute threats.\n• Poison Fishing: Toxic agricultural chemicals poured into tidal canals to force instant fish harvests, destroying food chains.\n• Banned Monofilament Current Jal: Tens of thousands of meters trapping endangered Ganges river dolphins.\n• Tiger Poaching & Canopy Loss: Illegal snares, deer venison syndicates (824kg seized in single raids), and unmonitored logging.\n• The 10,000 km² Communication Void: Rangers navigate blind tidal creeks for 14+ days without network coverage.`,
+      
+      `SLIDE 3 TALKING POINTS (TOPIC 1: 100% OFFLINE RESILIENCE):\n• Demonstrates our core innovation: 100% autonomous terminal mode with ZERO cellular bars.\n• ① Pre-Cached NASA Anomaly Layer: High-risk polygons active on device flash memory.\n• ② Offline GPS River Tracking: River coordinate lock without cell tower triangulation.\n• ③ On-Device INT8 YOLOv8 Model: 353ms local inference running directly on mobile CPU/NPU.\n• ④ Zero-Data-Loss SQLite Vault: Encrypted queue buffers incident dossiers until cellular return.`,
+      
+      `SLIDE 4 TALKING POINTS (TOPIC 2: HUNTER LEGAL GUIDANCE & AI DETECTION):\n• Guides professional trackers, hunters, and Mawalis (traditional honey gatherers).\n• 353ms camera scan detects Royal Bengal Tiger (94%) and Spotted Deer (92%).\n• Decoupled statutory engine maps detection to the Bangladesh Wildlife Conservation Act 2012 (Section 36).\n• Instantly generates bilingual statutory alert cards stating non-bailable status, 2 to 7 years rigorous imprisonment, and up to 10 lakh taka fines.\n• Provides proactive deterrence before any arrow, trap, or shot is fired.`,
+      
+      `SLIDE 5 TALKING POINTS (TOPIC 3: CITIZEN EMPOWERMENT & NET CHECKS):\n• Empowers general villagers and coastal fishermen across 4 daily use cases:\n• ① Pre-Fishing Net Check: Fishermen scan nets on riverbanks to verify mesh compliance under the Fisheries Act 1950.\n• ② Plain-Language Legal Awareness: Bilingual statutory education without legal jargon.\n• ③ Marine Fauna Protection: Prevents accidental entrapment of Ganges River Dolphins and sea turtles.\n• ④ Citizen Deforestation & Animal Rescue Desk: Logs photos of trapped wildlife or illegal logging for ranger dispatch.`,
+      
+      `SLIDE 6 TALKING POINTS (TOPIC 4: NASA SATELLITE RADAR FOR RANGERS):\n• Remote sensing engine querying NASA Earthdata CMR API (MOD13Q1 250m NDVI and MOD11A2 surface temp).\n• Anomaly algorithm flags ΔNDVI drops exceeding -0.15, pinpointing illegal tree felling.\n• Displays high-risk canopy drop polygons directly on the ranger's offline map.\n• One-tap compass calculates the exact steering bearing through tidal channels straight to poacher camps.`,
+      
+      `SLIDE 7 TALKING POINTS (TOPIC 5: TELECOM HANDSHAKE & CLOUD INGESTION):\n• The moment patrol boats or villagers enter coastal cellular footprint, an automated background handshake executes.\n• Two-way sync fetches new NASA thermal hotspot coordinates.\n• Background daemon uploads local SQLite incident dossiers to Cloudflare Workers gateway.\n• Cloudinary CDN handles multi-megabyte photo uploads directly, saving server bandwidth and updating Firestore.`,
+      
+      `SLIDE 8 TALKING POINTS (PRODUCTION SYNTHESIS & CLOSING):\n• Sundarban Sentinel is 100% live code with zero mock data.\n• Every tier—from NASA Earthdata CMR search to on-device TFLite inference and Cloudflare Workers proxy—is production-tested.\n• Team AstroForge: Md Nushad Jaman Raj, Tanjid Hossen Rifat, and Raf Rafin Mahmud.\n• Protecting the mangrove shield defending 30M+ coastal citizens.\n• Thank you, Hack For Humanity judges and organizers. We are now open for questions!`
+    ];
+
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+
+      slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+      counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+      notesText.textContent = presenterNotes[currentIndex] || '';
+    }
+
+    document.getElementById('prevBtn').onclick = () => showSlide(currentIndex - 1);
+    document.getElementById('nextBtn').onclick = () => showSlide(currentIndex + 1);
+
+    tabs.forEach((t, i) => {
+      t.onclick = () => showSlide(i);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') showSlide(currentIndex - 1);
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        showSlide(currentIndex + 1);
+      }
+    });
+
+    document.getElementById('toggleNotesBtn').onclick = () => {
+      notesDrawer.style.display = notesDrawer.style.display === 'none' ? 'block' : 'none';
+    };
+
+    document.getElementById('fullscreenBtn').onclick = () => {
+      if (!document.fullscreenElement) {
+        stageCard.requestFullscreen().catch(err => alert(err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    };
+
+    // Initialize
+    showSlide(0);
+  </script>
+</body>
+</html>

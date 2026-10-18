@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sundarban Sentinel - Grameenphone Futuremakers 2026 Interactive Pitch</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@500;700;800&family=Hind+Siliguri:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="gp-brand-badge">
+        <img src="assets/grameenphone_logo.png" alt="Grameenphone" class="gp-logo-img">
+        <div class="header-sep"></div>
+        <div class="brand-text">
+          <span class="competition-tag">FUTUREMAKERS 2026</span>
+          <span class="project-title">SUNDARBAN SENTINEL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Network Status Simulator -->
+    <div class="network-status-pill" id="networkPill">
+      <div class="status-indicator-dot" id="statusDot"></div>
+      <div class="status-info">
+        <span class="status-label" id="statusLabel">OFFLINE FIELD MODE</span>
+        <span class="status-sub" id="statusSub">0 BARS • ZERO CLOUD RELIANCE</span>
+      </div>
+      <button class="toggle-net-btn" id="toggleNetBtn" title="Toggle Network Connection">
+        <span class="icon">📶</span> Connect GP 5G
+      </button>
+    </div>
+
+    <div class="header-right">
+      <button class="nav-control-btn" id="autoPlayBtn">
+        <span class="play-icon">▶</span> Auto-Play Pitch
+      </button>
+      <button class="nav-control-btn secondary" id="fullscreenBtn">
+        <span>⛶</span> Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Interactive Timeline Chapters -->
+  <nav class="chapter-timeline" id="chapterNav">
+    <button class="chapter-tab active" data-chapter="0">
+      <span class="time-range">00:00 - 00:25</span>
+      <span class="tab-title">1. Wilderness Isolation</span>
+      <span class="tab-badge">Problem</span>
+    </button>
+    <button class="chapter-tab" data-chapter="1">
+      <span class="time-range">00:25 - 00:55</span>
+      <span class="tab-title">2. Hunter Deterrence</span>
+      <span class="tab-badge">Awareness</span>
+    </button>
+    <button class="chapter-tab" data-chapter="2">
+      <span class="time-range">00:55 - 01:45</span>
+      <span class="tab-title">3. Offline Edge AI & Legal Cards</span>
+      <span class="tab-badge active-voice">Voiceover Sync</span>
+    </button>
+    <button class="chapter-tab" data-chapter="3">
+      <span class="time-range">01:45 - 02:15</span>
+      <span class="tab-title">4. NASA Satellite Deforestation</span>
+      <span class="tab-badge">Remote Sensing</span>
+    </button>
+    <button class="chapter-tab" data-chapter="4">
+      <span class="time-range">02:15 - 02:50</span>
+      <span class="tab-title">5. Grameenphone 5G Handshake</span>
+      <span class="tab-badge gp-tag">GP Network</span>
+    </button>
+    <button class="chapter-tab" data-chapter="5">
+      <span class="time-range">02:50 - 03:10</span>
+      <span class="tab-title">6. National Impact</span>
+      <span class="tab-badge">Futuremakers</span>
+    </button>
+  </nav>
+
+  <!-- Main Presentation Stage (16:9 Aspect Ratio) -->
+  <main class="presentation-stage">
+    <div class="stage-viewport" id="stageViewport">
+
+      <!-- SCENE 1: WILDERNESS & ZERO NETWORK -->
+      <section class="scene-view active" id="scene0">
+        <div class="scene-bg-img" style="background-image: url('assets/scene1_ranger_patrol.jpg');"></div>
+        <div class="scene-overlay-dark"></div>
+
+        <div class="scene-content split-layout">
+          <div class="info-card glass-panel animate-fade-in">
+            <div class="kicker-pill red">DEEP SUNDARBANS WILDERNESS CHALLENGE</div>
+            <h1 class="scene-title">10,000 km² of Mangrove Labyrinth. Zero Cellular Coverage.</h1>
+            <p class="scene-body">
+              Deep inside the tidal creeks of the Sundarbans, Bangladeshi forest rangers face a communication blackout. There are <strong>no cell towers, zero internet, and no cloud access</strong>.
+            </p>
+            <div class="callout-grid">
+              <div class="metric-pill">
+                <span class="num">0 Bars</span>
+                <span class="lbl">Wilderness Isolation</span>
+              </div>
+              <div class="metric-pill">
+                <span class="num">100%</span>
+                <span class="lbl">On-Device Edge Mandate</span>
+              </div>
+              <div class="metric-pill">
+                <span class="num">114 Tigers</span>
+                <span class="lbl">Apex Species in Danger</span>
+              </div>
+            </div>
+            <div class="explanation-box">
+              <span class="exp-title">⚠️ THE OPERATIONAL GAP:</span>
+              Traditional conservation apps fail because they require cloud servers. When rangers spot an illegal fishing net or deer trap, they cannot wait to return to base to lookup complex wildlife laws or process evidence.
+            </div>
+          </div>
+
+          <div class="interactive-panel glass-panel animate-slide-up">
+            <div class="terminal-header">
+              <span>FIELD SIMULATION // DEEP TIDAL PATROL</span>
+              <span class="live-tag blink">100% OFFLINE</span>
+            </div>
+            <div class="radar-hud">
+              <div class="hud-circle ring1"></div>
+              <div class="hud-circle ring2"></div>
+              <div class="hud-scanner"></div>
+              <div class="hud-center-dot"></div>
+              <div class="hud-blip" style="top: 30%; left: 65%;"></div>
+              <div class="hud-blip" style="top: 70%; left: 40%;"></div>
+              <div class="hud-overlay-text">
+                <strong>SECTOR: CHARAPUTIA CREEK</strong><br>
+                GPS: 21.8462° N, 89.4791° E<br>
+                STATUS: DISCONNECTED FROM CLOUD<br>
+                EDGE ENGINE: ARMED & READY
+              </div>
+            </div>
+            <div class="interactive-prompt">
+              💡 <em>Click Next Chapter or Auto-Play to see how Sundarban Sentinel operates without internet!</em>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 2: HUNTER DETERRENCE & COMMUNITY AWARENESS -->
+      <section class="scene-view" id="scene1">
+        <div class="scene-bg-img" style="background-image: url('assets/scene2_ranger_community.jpg');"></div>
+        <div class="scene-overlay-dark"></div>
+
+        <div class="scene-content split-layout">
+          <div class="info-card glass-panel">
+            <div class="kicker-pill amber">COMMUNITY CONSERVATION & DETERRENCE</div>
+            <h1 class="scene-title">Empowering Rangers to Deter Local Hunters Before Crime Occurs</h1>
+            <p class="scene-body">
+              Many local coastal fishermen and honey collectors (mouals) inadvertently run afoul of complex forest protection laws or are misled by commercial poaching syndicates.
+            </p>
+            <div class="stat-highlight-row">
+              <div class="stat-bubble">
+                <span class="b-num">2-7 Years</span>
+                <span class="b-text">Imprisonment for hunting tigers & deer</span>
+              </div>
+              <div class="stat-bubble">
+                <span class="b-num">৳1-10 Lakh</span>
+                <span class="b-text">Non-bailable court fines</span>
+              </div>
+            </div>
+            <div class="explanation-box amber-border">
+              <span class="exp-title">🤝 PREVENTATIVE EDUCATION ON SCREEN:</span>
+              When rangers meet villagers or suspected deer poachers, they point the phone to show exact bilingual legal warnings in Bengali. It transforms the mobile phone from a simple camera into an authoritative legal deterrence tool.
+            </div>
+          </div>
+
+          <div class="interactive-panel glass-panel">
+            <div class="terminal-header">
+              <span>BILINGUAL STATUTORY WARNING CARD</span>
+              <span class="live-tag">BANGLA & ENGLISH</span>
+            </div>
+            <div class="law-card-demo">
+              <div class="law-badge-row">
+                <span class="badge red">জামিন-অযোগ্য (NON-BAILABLE)</span>
+                <span class="badge cyan">তফসিল-১ (SCHEDULE-I)</span>
+              </div>
+              <h3 class="law-title">বন্যপ্রাণী (সংরক্ষণ ও নিরাপত্তা) আইন, ২০১২</h3>
+              <p class="law-clause"><strong>ধারা ৩৬:</strong> বাঘ, হরিণ ও বিরল বন্যপ্রাণী শিকার, হত্যা বা পাচার আইনত কঠোর দণ্ডনীয় অপরাধ।</p>
+              <div class="penalty-box">
+                <strong>দণ্ড ও সাজা:</strong> ২ থেকে ৭ বছরের সশ্রম কারাদণ্ড এবং ১ লাখ থেকে ১০ লাখ টাকা জরিমানা। পুনরাবৃত্তিতে সর্বোচ্চ ১২ বছর কারাদণ্ড।
+              </div>
+              <div class="deterrence-quote">
+                "গ্রামবাসীদের সচেতন করতে এবং ট্র্যাপ পাতা থেকে বিরত রাখতে অ্যাপটি অন-স্পট প্রমাণ ও আইনের ধারা স্পষ্ট দেখিয়ে দেয়।"
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3: OFFLINE EDGE AI & VOICE-OVER SYNC (00:55 - 01:45) -->
+      <section class="scene-view" id="scene2">
+        <div class="scene-content custom-detection-layout">
+          <!-- Left: Voiceover Teleprompter Box -->
+          <div class="voiceover-column glass-panel">
+            <div class="kicker-pill emerald">PITCH VOICEOVER SYNC [00:55 - 01:45]</div>
+            <h2 class="vo-header">Exact Video Layer Voice Script</h2>
+            
+            <div class="vo-teleprompter" id="voTeleprompter">
+              <p class="vo-text-en">
+                <span class="word">"Introducing</span> <span class="word highlight">Sundarban</span> <span class="word highlight">Sentinel:</span> <span class="word">an</span> <span class="word">offline</span> <span class="word">edge-AI</span> <span class="word">conservation</span> <span class="word">terminal.</span>
+                <span class="word">Powered</span> <span class="word">by</span> <span class="word">a</span> <span class="word highlight">custom</span> <span class="word highlight">quantized</span> <span class="word highlight">YOLOv8</span> <span class="word">neural</span> <span class="word">network,</span> <span class="word">our</span> <span class="word">mobile</span> <span class="word">engine</span> <span class="word">operates</span> <span class="word highlight">entirely</span> <span class="word highlight">on-device</span> <span class="word">with</span> <span class="word highlight">zero</span> <span class="word highlight">cloud</span> <span class="word highlight">reliance.</span>
+                <span class="word">Rangers</span> <span class="word">simply</span> <span class="word">point</span> <span class="word">their</span> <span class="word">phone</span> <span class="word">to</span> <span class="word">detect</span> <span class="word">protected</span> <span class="word">wildlife</span> <span class="word">and</span> <span class="word highlight">illegal</span> <span class="word highlight">nets</span> <span class="word">in</span> <span class="word">milliseconds.</span>
+                <span class="word">Instantly,</span> <span class="word">our</span> <span class="word highlight">decoupled</span> <span class="word highlight">statutory</span> <span class="word highlight">engine</span> <span class="word">maps</span> <span class="word">the</span> <span class="word">detection</span> <span class="word">to</span> <span class="word">the</span> <span class="word highlight">Bangladesh</span> <span class="word highlight">Wildlife</span> <span class="word highlight">Conservation</span> <span class="word highlight">Act</span> <span class="word highlight">2012</span> <span class="word">and</span> <span class="word highlight">Fisheries</span> <span class="word highlight">Act</span> <span class="word highlight">1950</span>
+                <span class="word">—</span> <span class="word">generating</span> <span class="word highlight">court-admissible</span> <span class="word highlight">evidence</span> <span class="word highlight">cards</span> <span class="word">with</span> <span class="word">exact</span> <span class="word">legal</span> <span class="word">sections,</span> <span class="word">non-bailable</span> <span class="word">status,</span> <span class="word">and</span> <span class="word">GPS</span> <span class="word">coordinates."</span>
+              </p>
+            </div>
+
+            <!-- Interactive Model Selector -->
+            <div class="interactive-model-picker">
+              <span class="picker-label">TEST EDGE AI INFERENCE ON-DEVICE:</span>
+              <div class="picker-btns">
+                <button class="picker-btn active" data-model="tiger">🐅 Royal Bengal Tiger</button>
+                <button class="picker-btn" data-model="net">🕸️ Illegal Current Jal</button>
+                <button class="picker-btn" data-model="deer">🦌 Spotted Deer (Chitra)</button>
+              </div>
+            </div>
+
+            <!-- Deep Specs -->
+            <div class="edge-specs-card">
+              <div class="spec-row">
+                <span>Model Architecture:</span>
+                <strong>YOLOv8-nano (Custom Trained)</strong>
+              </div>
+              <div class="spec-row">
+                <span>Quantization:</span>
+                <strong>Full INT8 Quantized (TensorFlow Lite)</strong>
+              </div>
+              <div class="spec-row">
+                <span>Input Tensor:</span>
+                <strong>[1, 640, 640, 3] Normalized</strong>
+              </div>
+              <div class="spec-row">
+                <span>Inference Latency:</span>
+                <strong id="latencyDisplay" class="emerald-text">353ms - 509ms on CPU/NPU</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Smartphone Frame with Actual App Screenshots -->
+          <div class="device-showcase-column">
+            <div class="smartphone-chassis">
+              <div class="phone-speaker"></div>
+              <div class="phone-screen-container">
+                <img src="assets/raretiger.png" alt="App Screen" class="active-app-screen" id="activeAppScreen">
+                
+                <!-- Animated Bounding Box Overlay -->
+                <div class="hud-bounding-box" id="hudBox">
+                  <div class="hud-box-tag" id="hudTag">রয়্যাল বেঙ্গল টাইগার 94.0%</div>
+                  <div class="hud-box-corner tl"></div>
+                  <div class="hud-box-corner tr"></div>
+                  <div class="hud-box-corner bl"></div>
+                  <div class="hud-box-corner br"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 4: NASA SATELLITE REALTIME DEFORESTATION -->
+      <section class="scene-view" id="scene3">
+        <div class="scene-content split-layout">
+          <div class="info-card glass-panel">
+            <div class="kicker-pill cyan">NASA EARTHDATA SATELLITE REMOTE SENSING</div>
+            <h1 class="scene-title">Realtime NDVI Deforestation & Mangrove Stress Anomaly Tracking</h1>
+            <p class="scene-body">
+              Rangers do not just inspect the riverbanks—they monitor the entire canopy. Sundarban Sentinel ingests <strong>NASA MODIS (MOD13Q1) 16-day cycle 250m vegetation index granules</strong>.
+            </p>
+            <div class="ndvi-metrics-row">
+              <div class="ndvi-card">
+                <span class="n-title">Baseline NDVI</span>
+                <span class="n-val">0.6200</span>
+                <span class="n-sub">Historical Healthy Canopy</span>
+              </div>
+              <div class="ndvi-card warning">
+                <span class="n-title">Current NDVI</span>
+                <span class="n-val">0.4650</span>
+                <span class="n-sub">Degraded Sector Alert</span>
+              </div>
+              <div class="ndvi-card danger">
+                <span class="n-title">NDVI Delta</span>
+                <span class="n-val">-0.1550</span>
+                <span class="n-sub">Active Forest Clearing</span>
+              </div>
+            </div>
+            <div class="explanation-box cyan-border">
+              <span class="exp-title">🛰️ HOW IT WORKS FOR RANGERS:</span>
+              When illegal timber logging or salinity dieback occurs, the NDVI delta drops below the negative threshold. The app calculates GPS risk polygons (Satkhira, Chandpai, Sharankhola) and guides patrols directly to the deforestation coordinate.
+            </div>
+          </div>
+
+          <div class="interactive-panel glass-panel">
+            <div class="terminal-header">
+              <span>NASA SATELLITE SECTOR MONITORING</span>
+              <span class="live-tag">3 NASA RISKS ACTIVE</span>
+            </div>
+            <div class="nasa-screen-holder">
+              <img src="assets/riskarea1.png" alt="NASA NDVI Deforestation Anomaly" class="nasa-img" id="nasaScreenImg">
+              <div class="screen-switch-tabs">
+                <button class="screen-tab active" data-img="riskarea1.png">NDVI Anomaly Card</button>
+                <button class="screen-tab" data-img="deforestationzone2.png">Map Risk Polygons</button>
+                <button class="screen-tab" data-img="home1.png">Live Ranger GPS Pulse</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 5: THE GRAMEENPHONE NETWORK HANDSHAKE -->
+      <section class="scene-view" id="scene4">
+        <div class="scene-bg-img" style="background-image: url('assets/scene3_grameenphone_network.jpg');"></div>
+        <div class="scene-overlay-dark"></div>
+
+        <div class="scene-content split-layout">
+          <div class="info-card glass-panel">
+            <div class="kicker-pill gp-brand-pill">GRAMEENPHONE CONNECTIVITY ECOSYSTEM</div>
+            <h1 class="scene-title">The Grameenphone Network Handshake: Zero-Data-Loss Buffer Auto-Sync</h1>
+            <p class="scene-body">
+              As the ranger boat emerges from the deep creeks into coastal waterways, the terminal detects the Grameenphone 4G/5G coastal network signal.
+            </p>
+            <div class="handshake-steps-list">
+              <div class="step-item">
+                <span class="step-num">1</span>
+                <div class="step-desc">
+                  <strong>Network Reconnect:</strong> Terminal instantly authenticates with Grameenphone high-speed infrastructure.
+                </div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">2</span>
+                <div class="step-desc">
+                  <strong>Incident Buffer Discharge:</strong> All stored offline photos, TFLite inferences, and GPS tags upload to headquarters.
+                </div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">3</span>
+                <div class="step-desc">
+                  <strong>NASA Granule Pull:</strong> Latest satellite vegetation updates download back to the device for the next patrol.
+                </div>
+              </div>
+            </div>
+            
+            <button class="trigger-handshake-btn" id="triggerHandshakeBtn">
+              ⚡ Trigger Grameenphone Auto-Sync Simulation
+            </button>
+          </div>
+
+          <div class="interactive-panel glass-panel">
+            <div class="gp-sync-console">
+              <div class="gp-logo-centered">
+                <img src="assets/grameenphone_logo.png" alt="Grameenphone Logo">
+              </div>
+              <div class="sync-animation-box" id="syncAnimBox">
+                <div class="pulse-ring r1"></div>
+                <div class="pulse-ring r2"></div>
+                <div class="pulse-ring r3"></div>
+                <div class="sync-center-icon">📡</div>
+              </div>
+              <div class="sync-status-text" id="syncStatusText">
+                SIGNAL ACQUIRED: GRAMEENPHONE 5G<br>
+                <span>Ready to flush offline incident buffer...</span>
+              </div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar-fill" id="syncProgressBar"></div>
+              </div>
+              <div class="sync-log-terminal" id="syncLogTerminal">
+                [SYSTEM] Ready for Grameenphone handshake trigger...
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 6: FUTUREMAKERS 2026 VISION & CONCLUSION -->
+      <section class="scene-view" id="scene5">
+        <div class="scene-content full-summary-layout">
+          <div class="summary-hero glass-panel">
+            <div class="kicker-pill gp-brand-pill">GRAMEENPHONE FUTUREMAKERS IDEA COMPETITION 2026</div>
+            <h1 class="summary-headline">AI for Nature: Guarding the Sundarbans with Grameenphone</h1>
+            <p class="summary-sub">A scalable, national conservation infrastructure bridging Edge Artificial Intelligence and Bangladesh's leading telecom network.</p>
+
+            <div class="pillar-grid">
+              <div class="pillar-card">
+                <span class="p-icon">🧠</span>
+                <h3>100% Offline Edge AI</h3>
+                <p>Quantized INT8 YOLOv8 runs locally on commodity mobile phones. Zero cloud latency, zero cellular dependency in deep wilderness.</p>
+              </div>
+              <div class="pillar-card">
+                <span class="p-icon">⚖️</span>
+                <h3>Instant Legal Compliance</h3>
+                <p>Decoupled statutory engine delivers court-admissible evidence cards mapped to Wildlife Conservation Act 2012 and Fisheries Act 1950.</p>
+              </div>
+              <div class="pillar-card">
+                <span class="p-icon">🛰️</span>
+                <h3>NASA Realtime Deforestation</h3>
+                <p>Automated multi-spectral NDVI anomaly detection identifies forest canopy degradation and illegal felling across 16-day cycles.</p>
+              </div>
+              <div class="pillar-card highlight-gp">
+                <span class="p-icon">📶</span>
+                <h3>Grameenphone Network Sync</h3>
+                <p>Zero-Data-Loss incident buffer seamlessly handshakes with Grameenphone coastal network to update national authorities.</p>
+              </div>
+            </div>
+
+            <div class="closing-banner">
+              <div class="closing-quote">
+                "Together with Grameenphone Futuremakers, we can protect the Royal Bengal Tiger, eradicate illegal current nets, and ensure the Sundarbans remains our living shield for generations to come."
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Bottom Playback Controls & Voiceover Prompter -->
+  <footer class="app-footer">
+    <div class="playback-controls">
+      <button class="footer-btn" id="prevBtn">⏮ Prev Chapter</button>
+      <button class="footer-btn primary" id="playPauseBtn">▶ Play Presentation</button>
+      <button class="footer-btn" id="nextBtn">Next Chapter ⏭</button>
+      <span class="time-readout" id="timeReadout">00:00 / 03:10</span>
+    </div>
+
+    <div class="live-prompter-strip" id="prompterStrip">
+      <span class="prompter-indicator">VOICEOVER:</span>
+      <span class="prompter-text" id="prompterText">Part 1: The Deep Sundarbans Wilderness & Zero Cellular Network Challenge</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

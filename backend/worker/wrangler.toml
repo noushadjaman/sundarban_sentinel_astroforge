@@ -1,0 +1,10 @@
+name = "sundarban-sentinel-gateway"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+[vars]
+FIREBASE_PROJECT_ID = "sundarban-santinel"
+FIREBASE_API_KEY = "AIzaSyBJhYrGnSNTHcJIjsMiAGdv3x_Dejj8HH0"
+CLOUDINARY_CLOUD_NAME = "dsnb5jiht"
+CLOUDINARY_UPLOAD_PRESET = "sundarban_santinel"
+ENVIRONMENT = "production"

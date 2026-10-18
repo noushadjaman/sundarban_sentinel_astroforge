@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.dart_tool/
+.pub-cache/
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Build Outputs & Binaries (>100MB)
+build/
+mobile/build/
+android/app/debug/
+android/app/profile/
+android/app/release/
+*.apk
+*.aab
+*.dill
+
+# Heavy video edits (>100MB)
+videoedit/
+*.avi
+
+# Environment & Credentials
+.env
+service.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.pytest_cache/
+
+# IDE / System
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store
+Thumbs.db

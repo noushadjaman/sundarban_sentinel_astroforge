@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "586264563529",
+    "project_id": "sundarban-santinel",
+    "storage_bucket": "sundarban-santinel.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586264563529:android:563043a110670a440d5498",
+        "android_client_info": {
+          "package_name": "com.sundarban.santinel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATp6EqT2rteEQ9Xuo2NmWH2bSTz5_qgX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

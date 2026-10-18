@@ -1,0 +1,412 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "source": "NASA Earthdata CMR & LP DAAC",
+    "collection": "MOD13Q1.061 & MOD11A2.061",
+    "spatial_bounds": "89.00,21.50,89.95,22.50",
+    "generated_at": "2026-09-27T11:37:49.380343+00:00",
+    "total_zones": 7,
+    "active_anomalies": 3
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "sundarban_katka_core_01",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.72,
+              21.85
+            ],
+            [
+              89.78,
+              21.85
+            ],
+            [
+              89.79,
+              21.9
+            ],
+            [
+              89.73,
+              21.91
+            ],
+            [
+              89.72,
+              21.85
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_katka_core_01",
+        "name": "Katka Wildlife Sanctuary Core",
+        "description": "Primary Royal Bengal Tiger sanctuary with mixed mangrove forest (Heritiera fomes).",
+        "center": [
+          89.75,
+          21.87
+        ],
+        "status": "ACTIVE_ANOMALY",
+        "risk_level": "HIGH",
+        "is_anomaly": true,
+        "current_ndvi": 0.55,
+        "historical_baseline_ndvi": 0.74,
+        "ndvi_delta": -0.19,
+        "surface_temp_c": 30.9,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sundarban_kotka_deer_02",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.7,
+              21.8
+            ],
+            [
+              89.76,
+              21.8
+            ],
+            [
+              89.77,
+              21.86
+            ],
+            [
+              89.71,
+              21.85
+            ],
+            [
+              89.7,
+              21.8
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_kotka_deer_02",
+        "name": "Kotka - Kochikhali Coastal Range",
+        "description": "High-density spotted deer feeding corridor and coastal tidal mudflats.",
+        "center": [
+          89.73,
+          21.83
+        ],
+        "status": "MONITORED",
+        "risk_level": "LOW",
+        "is_anomaly": false,
+        "current_ndvi": 0.66,
+        "historical_baseline_ndvi": 0.69,
+        "ndvi_delta": -0.03,
+        "surface_temp_c": 29.3,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sundarban_chandpai_estuary_03",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.62,
+              22.32
+            ],
+            [
+              89.68,
+              22.32
+            ],
+            [
+              89.69,
+              22.38
+            ],
+            [
+              89.63,
+              22.38
+            ],
+            [
+              89.62,
+              22.32
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_chandpai_estuary_03",
+        "name": "Chandpai Mangrove Corridor",
+        "description": "Sundarban East Wildlife Sanctuary and Gangetic river dolphin confluence.",
+        "center": [
+          89.65,
+          22.35
+        ],
+        "status": "MONITORED",
+        "risk_level": "LOW",
+        "is_anomaly": false,
+        "current_ndvi": 0.68,
+        "historical_baseline_ndvi": 0.71,
+        "ndvi_delta": -0.03,
+        "surface_temp_c": 30.2,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sundarban_sarankhola_dublar_04",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.57,
+              21.87
+            ],
+            [
+              89.64,
+              21.87
+            ],
+            [
+              89.65,
+              21.93
+            ],
+            [
+              89.58,
+              21.93
+            ],
+            [
+              89.57,
+              21.87
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_sarankhola_dublar_04",
+        "name": "Sarankhola & Dublar Char Range",
+        "description": "Outer sea-boundary mangrove fringe heavily vulnerable to cyclone surges.",
+        "center": [
+          89.6,
+          21.9
+        ],
+        "status": "ACTIVE_ANOMALY",
+        "risk_level": "HIGH",
+        "is_anomaly": true,
+        "current_ndvi": 0.485,
+        "historical_baseline_ndvi": 0.65,
+        "ndvi_delta": -0.165,
+        "surface_temp_c": 31.6,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sundarban_satkhira_west_05",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.16,
+              22.17
+            ],
+            [
+              89.24,
+              22.17
+            ],
+            [
+              89.25,
+              22.24
+            ],
+            [
+              89.17,
+              22.24
+            ],
+            [
+              89.16,
+              22.17
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_satkhira_west_05",
+        "name": "Satkhira Western Saline Frontier",
+        "description": "High salinity frontier subject to Avicennia marina dieback and mangrove stress.",
+        "center": [
+          89.2,
+          22.2
+        ],
+        "status": "ACTIVE_ANOMALY",
+        "risk_level": "HIGH",
+        "is_anomaly": true,
+        "current_ndvi": 0.465,
+        "historical_baseline_ndvi": 0.62,
+        "ndvi_delta": -0.155,
+        "surface_temp_c": 32.7,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sundarban_karamjal_reserve_06",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.55,
+              22.39
+            ],
+            [
+              89.61,
+              22.39
+            ],
+            [
+              89.62,
+              22.45
+            ],
+            [
+              89.56,
+              22.45
+            ],
+            [
+              89.55,
+              22.39
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_karamjal_reserve_06",
+        "name": "Karamjal Conservation & Breeding Zone",
+        "description": "Northern buffer ecotone with intensive ranger patrols and estuarine crocodile habitat.",
+        "center": [
+          89.58,
+          22.42
+        ],
+        "status": "MONITORED",
+        "risk_level": "LOW",
+        "is_anomaly": false,
+        "current_ndvi": 0.7,
+        "historical_baseline_ndvi": 0.73,
+        "ndvi_delta": -0.03,
+        "surface_temp_c": 29.6,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "sundarban_hiron_point_07",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              89.43,
+              21.75
+            ],
+            [
+              89.5,
+              21.75
+            ],
+            [
+              89.51,
+              21.81
+            ],
+            [
+              89.44,
+              21.81
+            ],
+            [
+              89.43,
+              21.75
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "zone_id": "sundarban_hiron_point_07",
+        "name": "Hiron Point / Nilkamal Sanctuary",
+        "description": "Deep southern river mouth observatory at Passur river interface.",
+        "center": [
+          89.46,
+          21.78
+        ],
+        "status": "MONITORED",
+        "risk_level": "LOW",
+        "is_anomaly": false,
+        "current_ndvi": 0.65,
+        "historical_baseline_ndvi": 0.68,
+        "ndvi_delta": -0.03,
+        "surface_temp_c": 29.8,
+        "cloud_cover_percent": 0.0,
+        "granule_id": "MOD13Q1.A2026241.h26v06.061.2026257233944",
+        "sensor_product": "MOD13Q1.061 (Vegetation Indices 250m)",
+        "temperature_granule_id": "MOD11A2.A2026257.h26v06.061.2026266040150",
+        "temperature_product": "MOD11A2.061 (LST Day 1km)",
+        "acquisition_start": "2026-08-29T00:00:00.000Z",
+        "acquisition_end": "2026-09-13T23:59:59.000Z",
+        "download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/MOD13Q1.A2026241.h26v06.061.2026257233944.hdf",
+        "browse_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-public/MOD13Q1.061/MOD13Q1.A2026241.h26v06.061.2026257233944/BROWSE.MOD13Q1.A2026241.h26v06.061.2026257233945.1.jpg",
+        "ingestion_timestamp": "2026-09-27T11:37:49.380343+00:00"
+      }
+    }
+  ]
+}

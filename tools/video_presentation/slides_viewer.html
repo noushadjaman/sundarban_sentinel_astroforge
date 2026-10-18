@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sundarban Sentinel • Grameenphone Futuremakers 2026 Pitch Deck</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@700&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #ffffff;
+      color: #0f172a;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-wrap img {
+      height: 38px;
+    }
+
+    .brand-text h1 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0077b6;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-text p {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    button {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    button:hover {
+      background: #e2e8f0;
+    }
+
+    button.primary {
+      background: #0077b6;
+      color: #ffffff;
+      border-color: #0077b6;
+    }
+
+    button.primary:hover {
+      background: #023e8a;
+    }
+
+    .viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #020617;
+    }
+
+    .slide-stage {
+      width: 100%;
+      max-width: 1536px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      background: #f8fafc;
+    }
+
+    .slide-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .slide-img.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Video player modal */
+    #videoModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #videoModal.open {
+      display: flex;
+    }
+
+    #videoPlayer {
+      max-width: 1400px;
+      width: 90%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      background: #000;
+    }
+
+    .close-modal-btn {
+      margin-top: 18px;
+      background: #ffffff;
+      color: #0f172a;
+      border: none;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 800;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .slide-tabs {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .slide-tab-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #94a3b8;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12.5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .slide-tab-btn.active {
+      background: #0077b6;
+      border-color: #0077b6;
+      color: #ffffff;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand-wrap">
+      <img src="../../project_assets/Grameenphone_logo_PNG1.png" alt="Grameenphone">
+      <div class="brand-text">
+        <h1>Sundarban Sentinel • Grameenphone Futuremakers 2026</h1>
+        <p>Interactive 5-Topic Slide Deck with Functional UI Markers & 1080p Video</p>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button id="prevBtn">◀ Previous</button>
+      <span id="counter" style="font-weight: 800; font-size: 13px; font-family: 'JetBrains Mono'; min-width: 50px; text-align: center;">1 / 5</span>
+      <button id="nextBtn">Next ▶</button>
+      <button class="primary" id="openVideoBtn">▶ Play 1080p MP4 Video</button>
+    </div>
+  </header>
+
+  <div class="viewport">
+    <div class="slide-stage">
+      <img src="slides/slide_topic_1_offline_terminal.png" class="slide-img active" alt="Topic 1">
+      <img src="slides/slide_topic_2_edge_ai_species.png" class="slide-img" alt="Topic 2">
+      <img src="slides/slide_topic_3_general_people_usecase.png" class="slide-img" alt="Topic 3">
+      <img src="slides/slide_topic_4_nasa_deforestation.png" class="slide-img" alt="Topic 4">
+      <img src="slides/slide_topic_5_grameenphone_sync.png" class="slide-img" alt="Topic 5">
+    </div>
+
+    <div class="slide-tabs">
+      <button class="slide-tab-btn active" data-index="0">1. Offline Terminal Mode</button>
+      <button class="slide-tab-btn" data-index="1">2. For Professional Hunters</button>
+      <button class="slide-tab-btn" data-index="2">3. For General People & Fishermen</button>
+      <button class="slide-tab-btn" data-index="3">4. For Forest Rangers (NASA Satellite)</button>
+      <button class="slide-tab-btn" data-index="4">5. Grameenphone 4G Handshake</button>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div id="videoModal">
+    <video id="videoPlayer" controls>
+      <source src="../../project_assets/sundarban_sentinel_5topics_pitch_light_1080p.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <button class="close-modal-btn" id="closeVideoBtn">✕ Close Video Player</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide-img');
+    const tabs = document.querySelectorAll('.slide-tab-btn');
+    const counter = document.getElementById('counter');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+
+      slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+      counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+    }
+
+    document.getElementById('prevBtn').onclick = () => showSlide(currentIndex - 1);
+    document.getElementById('nextBtn').onclick = () => showSlide(currentIndex + 1);
+
+    tabs.forEach((t, i) => {
+      t.onclick = () => showSlide(i);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') showSlide(currentIndex - 1);
+      if (e.key === 'ArrowRight' || e.key === ' ') showSlide(currentIndex + 1);
+    });
+
+    const modal = document.getElementById('videoModal');
+    const player = document.getElementById('videoPlayer');
+    document.getElementById('openVideoBtn').onclick = () => {
+      modal.classList.add('open');
+      player.play();
+    };
+    document.getElementById('closeVideoBtn').onclick = () => {
+      player.pause();
+      modal.classList.remove('open');
+    };
+  </script>
+</body>
+</html>

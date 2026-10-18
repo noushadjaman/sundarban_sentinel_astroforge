@@ -1,0 +1,42 @@
+{
+  "bengal_tiger": {
+    "target": 30,
+    "downloaded": 30,
+    "totalMegabytes": "14.24",
+    "closeShotsExtracted": 10,
+    "filesRange": "bengal_tiger_01.jpg ... bengal_tiger_30.jpg",
+    "allVerified": true
+  },
+  "chital_deer": {
+    "target": 30,
+    "downloaded": 30,
+    "totalMegabytes": "11.65",
+    "closeShotsExtracted": 10,
+    "filesRange": "chital_deer_01.jpg ... chital_deer_30.jpg",
+    "allVerified": true
+  },
+  "ganges_dolphin": {
+    "target": 30,
+    "downloaded": 30,
+    "totalMegabytes": "8.27",
+    "closeShotsExtracted": 10,
+    "filesRange": "ganges_dolphin_01.jpg ... ganges_dolphin_30.jpg",
+    "allVerified": true
+  },
+  "current_jal": {
+    "target": 30,
+    "downloaded": 30,
+    "totalMegabytes": "18.93",
+    "closeShotsExtracted": 10,
+    "filesRange": "current_jal_01.jpg ... current_jal_30.jpg",
+    "allVerified": true
+  },
+  "lesser_adjutant": {
+    "target": 30,
+    "downloaded": 30,
+    "totalMegabytes": "8.25",
+    "closeShotsExtracted": 10,
+    "filesRange": "lesser_adjutant_01.jpg ... lesser_adjutant_30.jpg",
+    "allVerified": true
+  }
+}
