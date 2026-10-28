@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import '../models/incident_report.dart';
 import 'cloudinary_service.dart';
 import 'api_service.dart';
+import 'profile_service.dart';
 
 class SyncService {
   static const String boxName = 'reports_box';
@@ -17,10 +18,13 @@ class SyncService {
 
   Box? _box;
   StreamSubscription? _connectivitySub;
+  StreamSubscription? _boxSub;
 
   final ValueNotifier<bool> isSyncingNotifier = ValueNotifier<bool>(false);
   final ValueNotifier<bool> isOnlineNotifier = ValueNotifier<bool>(true);
   final ValueNotifier<int> pendingCountNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<List<IncidentReport>> reportsNotifier = ValueNotifier<List<IncidentReport>>([]);
+  final ValueNotifier<IncidentReport?> latestReportNotifier = ValueNotifier<IncidentReport?>(null);
 
   SyncService({
     CloudinaryService? cloudinary,
@@ -32,7 +36,12 @@ class SyncService {
     // 1. Initialize Hive
     await Hive.initFlutter();
     _box = await Hive.openBox(boxName);
-    _updatePendingCount();
+    _updateReportsState();
+
+    // Watch box for instant reactive updates across the entire app
+    _boxSub = _box?.watch().listen((_) {
+      _updateReportsState();
+    });
 
     // 2. Initial connectivity check
     final initialStatus = await Connectivity().checkConnectivity();
@@ -66,6 +75,11 @@ class SyncService {
     pendingCountNotifier.value = getPendingReports().length;
   }
 
+  void _updateReportsState() {
+    _updatePendingCount();
+    reportsNotifier.value = getAllReports();
+  }
+
   /// Saves a new incident capture locally in Hive with binary image persistence
   Future<IncidentReport> saveReportLocally({
     required double lat,
@@ -75,6 +89,10 @@ class SyncService {
     required Uint8List imageBytes,
     String notes = '',
     String deviceId = 'ranger_field_01',
+    String? reporterName,
+    String? reporterPhone,
+    int? rewardAmountBdt,
+    String? rewardStatus,
   }) async {
     final box = _box ?? await Hive.openBox(boxName);
 
@@ -92,6 +110,16 @@ class SyncService {
       localPath = 'data:image/jpeg;base64,${base64Encode(imageBytes)}';
     }
 
+    final currentProfile = ProfileService().currentProfile;
+    final finalReporterName = (reporterName != null && reporterName.trim().isNotEmpty)
+        ? reporterName.trim()
+        : (currentProfile?.name.isNotEmpty == true ? currentProfile!.name : 'Sundarban Sentinel');
+    final finalReporterPhone = (reporterPhone != null && reporterPhone.trim().isNotEmpty)
+        ? reporterPhone.trim()
+        : (currentProfile?.phone ?? '');
+    final finalRewardAmount = rewardAmountBdt ?? ProfileService().calculateRewardBdt(label);
+    final finalRewardStatus = rewardStatus ?? 'PENDING_VERIFICATION';
+
     final report = IncidentReport(
       id: 'rep_${DateTime.now().millisecondsSinceEpoch}_${imageBytes.length.toRadixString(16)}',
       lat: lat,
@@ -103,11 +131,16 @@ class SyncService {
       deviceId: deviceId,
       notes: notes,
       isSynced: false,
+      reporterName: finalReporterName,
+      reporterPhone: finalReporterPhone,
+      rewardAmountBdt: finalRewardAmount,
+      rewardStatus: finalRewardStatus,
     );
 
     // Store raw bytes in Hive for web or offline sync
     await box.put(report.id, report.toMap());
-    _updatePendingCount();
+    latestReportNotifier.value = report;
+    _updateReportsState();
 
     // If online, immediately attempt async upload
     if (isOnlineNotifier.value) {
@@ -163,14 +196,14 @@ class SyncService {
       report.isSynced = true;
       report.syncError = null;
       await _box?.put(report.id, report.toMap());
-      _updatePendingCount();
+      _updateReportsState();
       return true;
     } catch (e) {
       // ignore: avoid_print
       print('[SyncService] Sync failed for ${report.id}: $e');
       report.syncError = e.toString();
       await _box?.put(report.id, report.toMap());
-      _updatePendingCount();
+      _updateReportsState();
       return false;
     }
   }
@@ -188,11 +221,12 @@ class SyncService {
     }
 
     isSyncingNotifier.value = false;
-    _updatePendingCount();
+    _updateReportsState();
   }
 
   void dispose() {
     _connectivitySub?.cancel();
+    _boxSub?.cancel();
     _box?.close();
   }
 }

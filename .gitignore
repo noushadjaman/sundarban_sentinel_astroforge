@@ -16,9 +16,13 @@ android/app/release/
 *.aab
 *.dill
 
-# Heavy video edits (>100MB)
+# Heavy video edits & large datasets (>100MB)
 videoedit/
 *.avi
+animal_zip.zip
+animal_zip/
+best_int8 (1).tflite
+best_int8.tflite
 
 # Environment & Credentials
 .env

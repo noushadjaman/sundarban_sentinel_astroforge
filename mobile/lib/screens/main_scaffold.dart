@@ -8,6 +8,7 @@ import 'ranger_map_screen.dart';
 import 'edge_scanner_screen.dart';
 import 'reports_screen.dart';
 import 'analytics_screen.dart';
+import 'profile_screen.dart';
 
 class MainScaffold extends StatefulWidget {
   final ApiService apiService;
@@ -23,6 +24,11 @@ class MainScaffold extends StatefulWidget {
     required this.locationService,
   });
 
+  static void switchToTab(BuildContext context, int tabIndex) {
+    final state = context.findAncestorStateOfType<_MainScaffoldState>();
+    state?.setTab(tabIndex);
+  }
+
   @override
   State<MainScaffold> createState() => _MainScaffoldState();
 }
@@ -32,6 +38,12 @@ class _MainScaffoldState extends State<MainScaffold> {
   late final List<Widget> _screens;
   bool _previousOnlineStatus = true;
   bool _hasCheckedInitialStatus = false;
+
+  void setTab(int tabIndex) {
+    if (tabIndex >= 0 && tabIndex < _screens.length) {
+      setState(() => _currentIndex = tabIndex);
+    }
+  }
 
   @override
   void initState() {
@@ -52,6 +64,9 @@ class _MainScaffoldState extends State<MainScaffold> {
       ),
       AnalyticsScreen(
         apiService: widget.apiService,
+        syncService: widget.syncService,
+      ),
+      ProfileScreen(
         syncService: widget.syncService,
       ),
     ];
@@ -116,7 +131,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             const BottomNavigationBarItem(
               icon: Icon(Icons.center_focus_strong_outlined),
               activeIcon: Icon(Icons.center_focus_strong),
-              label: 'Edge AI',
+              label: 'Scanner',
             ),
             BottomNavigationBarItem(
               icon: ValueListenableBuilder<int>(
@@ -136,7 +151,12 @@ class _MainScaffoldState extends State<MainScaffold> {
             const BottomNavigationBarItem(
               icon: Icon(Icons.analytics_outlined),
               activeIcon: Icon(Icons.analytics),
-              label: 'Telemetry',
+              label: 'Analytics',
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded),
+              activeIcon: Icon(Icons.person_rounded),
+              label: 'Profile',
             ),
           ],
         ),

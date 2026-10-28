@@ -41,6 +41,10 @@ class ApiService {
       'timestamp': report.timestamp.toIso8601String(),
       'device_id': report.deviceId,
       'notes': report.notes,
+      'reporter_name': report.reporterName,
+      'reporter_phone': report.reporterPhone,
+      'reward_amount_bdt': report.rewardAmountBdt,
+      'reward_status': report.rewardStatus,
     };
 
     final resp = await http

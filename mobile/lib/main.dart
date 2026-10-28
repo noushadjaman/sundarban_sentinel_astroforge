@@ -4,6 +4,7 @@ import 'services/api_service.dart';
 import 'services/classifier_service.dart';
 import 'services/legal_registry_service.dart';
 import 'services/location_service.dart';
+import 'services/profile_service.dart';
 import 'services/sync_service.dart';
 import 'screens/main_scaffold.dart';
 
@@ -26,10 +27,11 @@ void main() async {
   final syncService = SyncService(api: apiService);
   final locationService = LocationService();
 
-  // Initialize offline storage, edge models & statutory legal intelligence
+  // Initialize offline storage, edge models, legal intelligence & profile vault
   await syncService.initialize();
   await classifierService.initialize();
   await LegalRegistryService.initialize();
+  await ProfileService().initialize();
 
   runApp(
     SundarbanSentinelApp(

@@ -96,24 +96,24 @@ class OfflineModeDialog extends StatelessWidget {
 
             // Feature Capabilities in Offline Mode
             _buildFeatureTile(
-              icon: Icons.memory,
+              icon: Icons.camera_alt_outlined,
               iconColor: const Color(0xFF00E676),
-              title: '100% Offline Edge AI Active',
-              description: 'The embedded INT8 YOLOv8 model runs directly on your device CPU/NPU with zero cloud or internet reliance.',
+              title: 'On-Device Wildlife Recognition',
+              description: 'Wildlife and illegal poaching gear detection operates directly on your device with zero internet reliance.',
             ),
             const SizedBox(height: 12),
             _buildFeatureTile(
               icon: Icons.shield_outlined,
               iconColor: const Color(0xFF00E5FF),
-              title: 'Zero-Data-Loss Incident Buffer',
-              description: 'All captured patrol photos, GPS coordinates, and legal violation tags are safely saved to local device storage.',
+              title: 'Secure Local Storage',
+              description: 'All captured patrol photos, GPS coordinates, and violation records are saved securely on your device.',
             ),
             const SizedBox(height: 12),
             _buildFeatureTile(
               icon: Icons.sync,
               iconColor: const Color(0xFFFFAB00),
               title: 'Automatic Cloud Synchronization',
-              description: 'Stored reports will automatically upload to the central headquarters database as soon as cellular or Wi-Fi reconnects.',
+              description: 'Stored reports automatically upload to central headquarters as soon as internet connection is restored.',
             ),
 
             const SizedBox(height: 22),

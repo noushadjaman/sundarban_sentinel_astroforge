@@ -12,6 +12,12 @@ class IncidentReport {
   bool isSynced;
   String? syncError;
 
+  // Profile & Conservation Reward Tracking
+  final String reporterName;
+  final String reporterPhone;
+  final int rewardAmountBdt;
+  final String rewardStatus;
+
   IncidentReport({
     required this.id,
     required this.lat,
@@ -25,6 +31,10 @@ class IncidentReport {
     this.notes = '',
     this.isSynced = false,
     this.syncError,
+    this.reporterName = 'Sundarban Sentinel',
+    this.reporterPhone = '',
+    this.rewardAmountBdt = 0,
+    this.rewardStatus = 'PENDING_VERIFICATION',
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +51,10 @@ class IncidentReport {
       'notes': notes,
       'isSynced': isSynced,
       'syncError': syncError,
+      'reporterName': reporterName,
+      'reporterPhone': reporterPhone,
+      'rewardAmountBdt': rewardAmountBdt,
+      'rewardStatus': rewardStatus,
     };
   }
 
@@ -58,6 +72,10 @@ class IncidentReport {
       notes: map['notes']?.toString() ?? '',
       isSynced: map['isSynced'] == true,
       syncError: map['syncError']?.toString(),
+      reporterName: map['reporterName']?.toString() ?? 'Sundarban Sentinel',
+      reporterPhone: map['reporterPhone']?.toString() ?? '',
+      rewardAmountBdt: (map['rewardAmountBdt'] as num?)?.toInt() ?? 0,
+      rewardStatus: map['rewardStatus']?.toString() ?? 'PENDING_VERIFICATION',
     );
   }
 }

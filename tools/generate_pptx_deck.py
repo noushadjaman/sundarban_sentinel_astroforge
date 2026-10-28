@@ -17,7 +17,7 @@ def build_deck():
             "image": "project_assets/hackathon_slides/slide_1_title_astroforge.png",
             "notes": (
                 "SLIDE 1 TALKING POINTS (TEAM ASTROFORGE):\n"
-                "- Welcome honorable judges and participants of Hack For Humanity 2026. We are Team AstroForge, represented by Md Nushad Jaman Raj, Tanjid Hossen Rifat, and Raf Rafin Mahmud.\n"
+                "- Welcome honorable judges and participants of Hack For Humanity 2026. We are Team AstroForge from RUET, represented by Md Nushad Jaman Raj, Tanjid Hossen Rifat, and Raf Rafin Mahmud.\n"
                 "- Today we present Sundarban Sentinel: a fully engineered, zero-mock production distributed system built for mangrove conservation and frontline humanitarian protection.\n"
                 "- The Sundarbans is the world's largest contiguous mangrove forest (10,000 km²) and a UNESCO World Heritage site that protects over 30 million coastal citizens from deadly cyclone storm surges.\n"
                 "- However, the deep forest is a total cellular black hole. Forest rangers, honey collectors (Mawalis), and fishermen operate in complete isolation with 0 bars of mobile coverage.\n"
@@ -26,10 +26,46 @@ def build_deck():
         },
         {
             "num": 2,
+            "title": "Md. Nushad Jaman Raj - Team Leader & System Architect",
+            "image": "project_assets/hackathon_slides/slide_team_1_raj.png",
+            "notes": (
+                "SLIDE 2 TALKING POINTS (MD. NUSHAD JAMAN RAJ - TEAM LEADER & SYSTEM ARCHITECT):\n"
+                "- Lead Edge-AI Systems Architect, Mobile Developer & Core Ideator.\n"
+                "- Formulated the end-to-end Sundarban Sentinel technical blueprint, zero-mock design philosophy, and competition strategy.\n"
+                "- Architected the Flutter mobile production client with live offline GPS tracking, citizen ticket management, and profile vault.\n"
+                "- Quantized and deployed on-device INT8 YOLOv8 computer vision model running at 32ms offline inference on mobile NPU/CPU."
+            )
+        },
+        {
+            "num": 3,
+            "title": "Raf Rafin Mahmud - Lead Data Analyst",
+            "image": "project_assets/hackathon_slides/slide_team_2_rafin.png",
+            "notes": (
+                "SLIDE 3 TALKING POINTS (RAF RAFIN MAHMUD - LEAD DATA ANALYST):\n"
+                "- Lead Data Analyst & Environmental Intelligence Specialist.\n"
+                "- Engineered automated NASA Earthdata CMR queries retrieving MOD13Q1 250m NDVI 16-day vegetation composites and MOD11A2 land surface temperatures.\n"
+                "- Formulated algorithmic thresholding (NDVI delta < -0.15) to detect real-time canopy loss and illegal tree felling.\n"
+                "- Generated active geospatial polygon clusters for ranger offline patrol navigation and poacher deterrence."
+            )
+        },
+        {
+            "num": 4,
+            "title": "Tanjid Hossen Rifat - Web Architect & Media Director",
+            "image": "project_assets/hackathon_slides/slide_team_3_tanjid.png",
+            "notes": (
+                "SLIDE 4 TALKING POINTS (TANJID HOSSEN RIFAT - WEB ARCHITECT & MEDIA DIRECTOR):\n"
+                "- Lead Web Systems Developer & Creative Media Director.\n"
+                "- Developed Cloudflare Workers serverless edge gateway handling low-latency Firestore queries, CORS proxying, and incident dossier ingestion.\n"
+                "- Directed pitch presentation animations, cinematic storytelling, and visual project branding.\n"
+                "- Built responsive analytical web telemetry dashboards for real-time forest ranger coordination and incident audits."
+            )
+        },
+        {
+            "num": 5,
             "title": "The Crisis: Poaching, Poison Fishing & Isolation",
             "image": "project_assets/hackathon_slides/slide_news_crisis_overview.png",
             "notes": (
-                "SLIDE 2 TALKING POINTS (PROBLEM STATEMENT & GROUND EVIDENCE):\n"
+                "SLIDE 5 TALKING POINTS (PROBLEM STATEMENT & GROUND EVIDENCE):\n"
                 "- Here is the undeniable ground reality in the Sundarbans, documented by verified investigative reports in The Business Standard and Dhaka Tribune.\n"
                 "- Crisis 1: Poison Fishing Syndicates pour toxic pesticide chemicals into tidal canals to force instant fish harvests, causing catastrophic aquatic die-offs and poisoning food chains.\n"
                 "- Crisis 2: Lethal Current Nets & Snares. Tens of thousands of meters of banned monofilament nylon current jal trap endangered Ganges river dolphins and Olive Ridley turtles.\n"
@@ -38,11 +74,11 @@ def build_deck():
             )
         },
         {
-            "num": 3,
+            "num": 6,
             "title": "Topic 1: 100% Offline Terminal Mode",
             "image": "project_assets/hackathon_slides/slide_topic_1_offline_terminal.png",
             "notes": (
-                "SLIDE 3 TALKING POINTS (TOPIC 1: 100% OFFLINE RESILIENCE):\n"
+                "SLIDE 6 TALKING POINTS (TOPIC 1: 100% OFFLINE RESILIENCE):\n"
                 "- Topic 1 demonstrates our core innovation: 100% autonomous offline terminal mode.\n"
                 "- In FIG 1.1 and 1.2, you can see our live Flutter application running with ZERO cellular bars.\n"
                 "- Point 1: Cached NASA Anomaly Layer. Satellite risk polygons are pre-cached on device flash memory.\n"
@@ -52,11 +88,11 @@ def build_deck():
             )
         },
         {
-            "num": 4,
+            "num": 7,
             "title": "Topic 2: AI Species Legal Verification for Hunters",
             "image": "project_assets/hackathon_slides/slide_topic_2_edge_ai_species.png",
             "notes": (
-                "SLIDE 4 TALKING POINTS (TOPIC 2: HUNTER LEGAL GUIDANCE & AI DETECTION):\n"
+                "SLIDE 7 TALKING POINTS (TOPIC 2: HUNTER LEGAL GUIDANCE & AI DETECTION):\n"
                 "- Topic 2 addresses professional trackers, hunters, and Mawalis (traditional honey gatherers).\n"
                 "- In FIG 2.1 and 2.2, rangers or hunters simply point their mobile camera at wildlife.\n"
                 "- Our quantized neural network classifies the Royal Bengal Tiger at 94% confidence and Spotted Deer at 92% confidence in 353ms.\n"
@@ -66,11 +102,11 @@ def build_deck():
             )
         },
         {
-            "num": 5,
+            "num": 8,
             "title": "Topic 3: Community Net Checks & Citizen Rescue",
             "image": "project_assets/hackathon_slides/slide_topic_3_general_people_usecase.png",
             "notes": (
-                "SLIDE 5 TALKING POINTS (TOPIC 3: CITIZEN EMPOWERMENT & NET CHECKS):\n"
+                "SLIDE 8 TALKING POINTS (TOPIC 3: CITIZEN EMPOWERMENT & NET CHECKS):\n"
                 "- In Topic 3, we empower general citizens and coastal fishermen across 4 daily use cases:\n"
                 "- Use Case 1: Pre-Fishing Net Check. Fishermen scan their fishing nets on the riverbank before casting to ensure mesh legality under the Protection and Conservation of Fish Act 1950, avoiding boat confiscation.\n"
                 "- Use Case 2: Legal Awareness without Jargon. Plain-language statutory guidance in Bengali.\n"
@@ -79,11 +115,11 @@ def build_deck():
             )
         },
         {
-            "num": 6,
+            "num": 9,
             "title": "Topic 4: NASA Satellite Deforestation Radar",
             "image": "project_assets/hackathon_slides/slide_topic_4_nasa_deforestation.png",
             "notes": (
-                "SLIDE 6 TALKING POINTS (TOPIC 4: NASA SATELLITE RADAR FOR RANGERS):\n"
+                "SLIDE 9 TALKING POINTS (TOPIC 4: NASA SATELLITE RADAR FOR RANGERS):\n"
                 "- Topic 4 introduces our remote sensing engine for forest department rangers.\n"
                 "- Our backend pipeline queries NASA Earthdata CMR endpoints for MODIS MOD13Q1 (250m NDVI) and MOD11A2 (surface temperature).\n"
                 "- Our anomaly algorithm identifies ΔNDVI drops exceeding -0.15, signaling active illegal timber felling camps.\n"
@@ -92,11 +128,11 @@ def build_deck():
             )
         },
         {
-            "num": 7,
+            "num": 10,
             "title": "Topic 5: Cellular Handshake & Auto-Sync",
             "image": "project_assets/hackathon_slides/slide_topic_5_cellular_sync.png",
             "notes": (
-                "SLIDE 7 TALKING POINTS (TOPIC 5: TELECOM HANDSHAKE & CLOUD INGESTION):\n"
+                "SLIDE 10 TALKING POINTS (TOPIC 5: TELECOM HANDSHAKE & CLOUD INGESTION):\n"
                 "- Topic 5 demonstrates what happens when patrol boats or villagers return to coastal cell coverage.\n"
                 "- An automated background handshake connects to coastal 4G/5G towers with zero user intervention.\n"
                 "- Point 1: Two-way sync fetches updated NASA thermal anomaly polygons.\n"
@@ -105,17 +141,17 @@ def build_deck():
             )
         },
         {
-            "num": 8,
+            "num": 11,
             "title": "Production Architecture & Team AstroForge",
             "image": "project_assets/hackathon_slides/slide_8_architecture_team.png",
             "notes": (
-                "SLIDE 8 TALKING POINTS (PRODUCTION SYNTHESIS & CLOSING):\n"
+                "SLIDE 11 TALKING POINTS (PRODUCTION SYNTHESIS & CLOSING):\n"
                 "- In conclusion, Sundarban Sentinel is not a mockup or a theoretical pitch.\n"
                 "- Every single tier—from live NASA Earthdata CMR ingestion to on-device INT8 YOLOv8 inference and Cloudflare Workers gateway—is fully functional and production-tested.\n"
                 "- On behalf of Team AstroForge:\n"
-                "  • Md Nushad Jaman Raj (Team Lead & Mobile Edge AI)\n"
-                "  • Tanjid Hossen Rifat (Cloud & Edge Gateway Architect)\n"
-                "  • Raf Rafin Mahmud (GIS & Remote Sensing Engineer)\n"
+                "  • Md Nushad Jaman Raj (Lead Edge-AI Systems Architect, Mobile Developer & Core Ideator)\n"
+                "  • Raf Rafin Mahmud (Lead Data Analyst & Environmental Intelligence Specialist)\n"
+                "  • Tanjid Hossen Rifat (Lead Web Systems Developer & Creative Media Director)\n"
                 "- We believe AI must serve the planet's most vulnerable ecosystems and coastal communities.\n"
                 "- Thank you, Hack For Humanity judges and organizers. We are now open for questions!"
             )

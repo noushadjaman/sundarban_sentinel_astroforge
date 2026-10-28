@@ -58,13 +58,39 @@ class TFLiteService {
   bool get isReady => _isInitialized;
   List<String> get labels => _labels;
 
-  /// Default labels if labels.txt fails to load
+  /// Default labels if labels.txt fails to load (31 classes: animals, poachers & illegal nets)
   static const List<String> defaultClassNames = [
     'bengal_tiger',
     'chital_deer',
-    'current_jal',
+    'barking_deer',
+    'wild_boar',
+    'fishing_cat',
+    'leopard_cat',
+    'smooth_coated_otter',
+    'rhesus_macaque',
+    'pangolin',
     'ganges_dolphin',
+    'irrawaddy_dolphin',
+    'finless_porpoise',
+    'saltwater_crocodile',
+    'king_cobra',
+    'rock_python',
+    'monitor_lizard',
+    'olive_ridley_turtle',
+    'batagur_baska',
+    'horseshoe_crab',
+    'white_bellied_sea_eagle',
+    'masked_finfoot',
     'lesser_adjutant',
+    'mangrove_pitta',
+    'current_jal',
+    'behundi_jal',
+    'poison_fishing',
+    'jatka_hilsa',
+    'mother_hilsa',
+    'sundari_wood',
+    'illegal_golpata',
+    'undersized_mud_crab',
   ];
 
   Future<void> initialize() async {

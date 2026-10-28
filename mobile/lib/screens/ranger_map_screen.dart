@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../models/risk_zone.dart';
+import '../models/starlink_node.dart';
 import '../services/api_service.dart';
 import '../services/location_service.dart';
+import '../services/starlink_service.dart';
 import '../services/sync_service.dart';
 import '../widgets/offline_mode_dialog.dart';
+import '../widgets/starlink_router_sheet.dart';
+import '../widgets/incident_detail_sheet.dart';
+import 'main_scaffold.dart';
 
 class RangerMapScreen extends StatefulWidget {
   final ApiService apiService;
@@ -26,8 +31,10 @@ class RangerMapScreen extends StatefulWidget {
 
 class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProviderStateMixin {
   final MapController _mapController = MapController();
+  final StarlinkService _starlinkService = StarlinkService();
   List<RiskZone> _riskZones = [];
   bool _isLoadingZones = true;
+  bool _showStarlinkLayer = true;
 
   LatLng _rangerLocation = LocationService.defaultSundarbanLocation;
   StreamSubscription<LatLng>? _locationSub;
@@ -48,8 +55,13 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
+    widget.syncService.reportsNotifier.addListener(_onReportsUpdated);
     _initLocation();
     _loadRiskZones();
+  }
+
+  void _onReportsUpdated() {
+    if (mounted) setState(() {});
   }
 
   Future<void> _initLocation() async {
@@ -321,6 +333,7 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
 
   @override
   void dispose() {
+    widget.syncService.reportsNotifier.removeListener(_onReportsUpdated);
     _locationSub?.cancel();
     _pulseController.dispose();
     super.dispose();
@@ -350,29 +363,42 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
                 userAgentPackageName: 'com.sundarban.santinel',
                 maxZoom: 18,
               ),
-
-              // Risk Zone Polygons
+              // Risk Zone & Dead Zone Polygons Layer
               PolygonLayer(
-                polygons: _riskZones.map((zone) {
-                  final isCrit = zone.ndviDelta < -0.18;
-                  final fillColor = isCrit
-                      ? const Color(0xFFFF1744).withValues(alpha: 0.35)
-                      : const Color(0xFFFF9100).withValues(alpha: 0.30);
-                  final borderColor = isCrit ? const Color(0xFFFF1744) : const Color(0xFFFF9100);
+                polygons: [
+                  // NASA Risk Zones
+                  ..._riskZones.map((zone) {
+                    final isCrit = zone.ndviDelta < -0.18;
+                    final fillColor = isCrit
+                        ? const Color(0xFFFF1744).withValues(alpha: 0.35)
+                        : const Color(0xFFFF9100).withValues(alpha: 0.30);
+                    final borderColor = isCrit ? const Color(0xFFFF1744) : const Color(0xFFFF9100);
 
-                  return Polygon(
-                    points: zone.polygon,
-                    color: fillColor,
-                    borderColor: borderColor,
-                    borderStrokeWidth: 2.5,
-                  );
-                }).toList(),
+                    return Polygon(
+                      points: zone.polygon,
+                      color: fillColor,
+                      borderColor: borderColor,
+                      borderStrokeWidth: 2.5,
+                    );
+                  }),
+
+                  // 8 Sundarban No-Internet Dead Zones (Cellular Blackouts)
+                  if (_showStarlinkLayer)
+                    ...StarlinkService.nodes.map((node) {
+                      return Polygon(
+                        points: node.deadZonePolygon,
+                        color: const Color(0xFFFF5722).withValues(alpha: 0.20),
+                        borderColor: const Color(0xFFFF3D00).withValues(alpha: 0.85),
+                        borderStrokeWidth: 2.0,
+                      );
+                    }),
+                ],
               ),
 
-              // Markers Layer: Center of each Risk Zone + Ranger Marker
+              // Markers Layer: NASA Centers + No-Internet Badges + Starlink Routers + Ranger
               MarkerLayer(
                 markers: [
-                  // Zone Center Markers
+                  // NASA Zone Center Markers
                   ..._riskZones.map((zone) {
                     return Marker(
                       point: zone.center,
@@ -411,6 +437,216 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+
+                  // Starlink Hotspot & Dead Zone Markers
+                  if (_showStarlinkLayer) ...[
+                    // A. No-Internet Zone Warning Badges
+                    ...StarlinkService.nodes.map((node) {
+                      final topPt = node.deadZonePolygon[1];
+                      return Marker(
+                        point: topPt,
+                        width: 140,
+                        height: 26,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1E0A05).withValues(alpha: 0.92),
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: const Color(0xFFFF5722), width: 1.0),
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black54, blurRadius: 4),
+                            ],
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.signal_cellular_connected_no_internet_0_bar,
+                                  size: 11, color: Color(0xFFFFAB00)),
+                              SizedBox(width: 4),
+                              Text(
+                                'NO INTERNET ZONE',
+                                style: TextStyle(
+                                  fontSize: 8.5,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 0.5,
+                                  color: Color(0xFFFFD54F),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+
+                    // B. Starlink LEO Satellite Free Hotspot Station Markers
+                    ...StarlinkService.nodes.map((node) {
+                      return Marker(
+                        point: node.location,
+                        width: 135,
+                        height: 52,
+                        child: ValueListenableBuilder<StarlinkNode?>(
+                          valueListenable: _starlinkService.connectedNodeNotifier,
+                          builder: (context, connectedNode, _) {
+                            final isConnected = connectedNode?.id == node.id;
+                            return GestureDetector(
+                              onTap: () {
+                                StarlinkRouterSheet.show(
+                                  context,
+                                  node: node,
+                                  userLocation: _rangerLocation,
+                                  syncService: widget.syncService,
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF071711).withValues(alpha: 0.95),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: isConnected
+                                        ? const Color(0xFF00E5FF)
+                                        : const Color(0xFF00E676),
+                                    width: isConnected ? 2.0 : 1.4,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: (isConnected
+                                              ? const Color(0xFF00E5FF)
+                                              : const Color(0xFF00E676))
+                                          .withValues(alpha: isConnected ? 0.6 : 0.3),
+                                      blurRadius: isConnected ? 12 : 6,
+                                      spreadRadius: isConnected ? 1 : 0,
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 24,
+                                      height: 24,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: isConnected
+                                            ? const Color(0xFF00E5FF).withValues(alpha: 0.25)
+                                            : const Color(0xFF00E676).withValues(alpha: 0.20),
+                                      ),
+                                      child: const Center(
+                                        child: Text('🛰️', style: TextStyle(fontSize: 13)),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            isConnected ? 'CONNECTED' : 'STARLINK FREE',
+                                            style: TextStyle(
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w900,
+                                              letterSpacing: 0.5,
+                                              color: isConnected
+                                                  ? const Color(0xFF00E5FF)
+                                                  : const Color(0xFF00E676),
+                                            ),
+                                          ),
+                                          Text(
+                                            node.name.split(' ').first,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }),
+                  ],
+
+                  // Field Incidents Logged on the Ground (Reactive Real-time)
+                  ...widget.syncService.reportsNotifier.value.map((rep) {
+                    final isThreat = rep.label == 'current_jal' || rep.label.contains('jal');
+                    return Marker(
+                      point: LatLng(rep.lat, rep.lng),
+                      width: 95,
+                      height: 44,
+                      child: GestureDetector(
+                        onTap: () {
+                          IncidentDetailSheet.show(
+                            context,
+                            report: rep,
+                            syncService: widget.syncService,
+                            onViewInVault: () => MainScaffold.switchToTab(context, 2),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF130905).withValues(alpha: 0.95),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: isThreat ? const Color(0xFFFF1744) : const Color(0xFFFFAB00),
+                              width: 1.5,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: (isThreat ? Colors.red : Colors.orange).withValues(alpha: 0.4),
+                                blurRadius: 6,
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(isThreat ? '🚨' : '📍', style: const TextStyle(fontSize: 12)),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      rep.label.split('_').first.toUpperCase(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      rep.isSynced ? 'SYNCED' : 'BUFFER',
+                                      style: TextStyle(
+                                        fontSize: 7.5,
+                                        fontWeight: FontWeight.bold,
+                                        color: rep.isSynced
+                                            ? const Color(0xFF00E676)
+                                            : const Color(0xFFFF9100),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -505,7 +741,7 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '${_riskZones.length} NASA RISKS ACTIVE',
+                          '${_riskZones.length} RISK ZONES • ${widget.syncService.reportsNotifier.value.length} REPORTS',
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
@@ -566,6 +802,23 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
 
                   const Spacer(),
 
+                  // Starlink Hotspots Layer Toggle Button
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0E1F17).withValues(alpha: 0.90),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: _showStarlinkLayer ? const Color(0xFF00E5FF) : const Color(0xFF1E3A2E),
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: const Text('🛰️', style: TextStyle(fontSize: 16)),
+                      tooltip: 'Toggle Starlink Hotspots Layer',
+                      onPressed: () => setState(() => _showStarlinkLayer = !_showStarlinkLayer),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+
                   // Layer Toggle Button
                   Container(
                     decoration: BoxDecoration(
@@ -609,42 +862,134 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
             ),
           ),
 
-          // 2.1 Floating Offline Banner on Home Screen
-          ValueListenableBuilder<bool>(
-            valueListenable: widget.syncService.isOnlineNotifier,
-            builder: (context, isOnline, child) {
-              if (isOnline) return const SizedBox.shrink();
+          // 2.1 Floating Offline Banner on Home Screen (shown only if not connected to Starlink)
+          ValueListenableBuilder<StarlinkNode?>(
+            valueListenable: _starlinkService.connectedNodeNotifier,
+            builder: (context, starlinkNode, _) {
+              if (starlinkNode != null) return const SizedBox.shrink();
+              return ValueListenableBuilder<bool>(
+                valueListenable: widget.syncService.isOnlineNotifier,
+                builder: (context, isOnline, child) {
+                  if (isOnline) return const SizedBox.shrink();
+                  return Positioned(
+                    top: 72,
+                    left: 16,
+                    right: 16,
+                    child: GestureDetector(
+                      onTap: () => OfflineModeDialog.show(context),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF171003).withValues(alpha: 0.95),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: const Color(0xFFFF9100).withValues(alpha: 0.75),
+                            width: 1.2,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(color: Colors.black54, blurRadius: 12, offset: Offset(0, 3)),
+                          ],
+                        ),
+                        child: const Row(
+                          children: [
+                            Icon(Icons.cloud_off_rounded, color: Color(0xFFFF9100), size: 16),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Offline Field Mode • Edge AI & Incident Buffer Active',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFFFFE082),
+                                ),
+                              ),
+                            ),
+                            Icon(Icons.info_outline, color: Color(0xFFFFB74D), size: 15),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+
+          // 2.2 Floating Starlink Connection Status Banner
+          ValueListenableBuilder<StarlinkNode?>(
+            valueListenable: _starlinkService.connectedNodeNotifier,
+            builder: (context, connectedNode, child) {
+              if (connectedNode == null) return const SizedBox.shrink();
               return Positioned(
                 top: 72,
                 left: 16,
                 right: 16,
                 child: GestureDetector(
-                  onTap: () => OfflineModeDialog.show(context),
+                  onTap: () {
+                    StarlinkRouterSheet.show(
+                      context,
+                      node: connectedNode,
+                      userLocation: _rangerLocation,
+                      syncService: widget.syncService,
+                    );
+                  },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF171003).withValues(alpha: 0.95),
+                      color: const Color(0xFF001B24).withValues(alpha: 0.95),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: const Color(0xFFFF9100).withValues(alpha: 0.75), width: 1.2),
-                      boxShadow: const [
-                        BoxShadow(color: Colors.black54, blurRadius: 12, offset: Offset(0, 3)),
+                      border: Border.all(color: const Color(0xFF00E5FF), width: 1.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF00E5FF).withValues(alpha: 0.35),
+                          blurRadius: 14,
+                          spreadRadius: 1,
+                        ),
                       ],
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.cloud_off_rounded, color: Color(0xFFFF9100), size: 16),
-                        SizedBox(width: 10),
+                        const Text('🛰️', style: TextStyle(fontSize: 16)),
+                        const SizedBox(width: 10),
                         Expanded(
-                          child: Text(
-                            'Offline Field Mode • Edge AI & Incident Buffer Active',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'STARLINK FREE LEO: ${connectedNode.routerSsid}',
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                  color: Color(0xFF00E5FF),
+                                ),
+                              ),
+                              Text(
+                                '${connectedNode.downlinkMbps.toInt()} Mbps • Ping ${connectedNode.latencyMs}ms • Realtime Cloud Sync Active',
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Color(0xFFB2EBF2),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF00E5FF).withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Text(
+                            'MANAGE',
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 9,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFFFFE082),
+                              color: Color(0xFF00E5FF),
                             ),
                           ),
                         ),
-                        Icon(Icons.info_outline, color: Color(0xFFFFB74D), size: 15),
                       ],
                     ),
                   ),
@@ -653,11 +998,42 @@ class _RangerMapScreenState extends State<RangerMapScreen> with SingleTickerProv
             },
           ),
 
-          // 3. Floating Action Center on Ranger
+          // 3. Floating Quick Action: Connect to Nearest Starlink Router
+          Positioned(
+            right: 16,
+            bottom: 82,
+            child: FloatingActionButton.extended(
+              heroTag: 'starlink_fab',
+              backgroundColor: const Color(0xFF00E5FF),
+              foregroundColor: Colors.black,
+              onPressed: () {
+                final nearest = _starlinkService.getNearestNode(_rangerLocation);
+                _mapController.move(nearest.location, 13.0);
+                StarlinkRouterSheet.show(
+                  context,
+                  node: nearest,
+                  userLocation: _rangerLocation,
+                  syncService: widget.syncService,
+                );
+              },
+              icon: const Text('🛰️', style: TextStyle(fontSize: 16)),
+              label: const Text(
+                'FREE STARLINK ROUTER',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.6,
+                ),
+              ),
+            ),
+          ),
+
+          // 4. Floating Action Center on Ranger
           Positioned(
             right: 16,
             bottom: 24,
             child: FloatingActionButton(
+              heroTag: 'gps_fab',
               mini: true,
               backgroundColor: const Color(0xFF00E676),
               onPressed: () {

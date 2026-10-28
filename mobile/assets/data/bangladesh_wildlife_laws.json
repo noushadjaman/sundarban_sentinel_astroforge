@@ -339,5 +339,27 @@
     "section": "বিধিমালা ৮",
     "punishment": "কাঁকড়া জব্দ ও অর্থদণ্ড।",
     "action_instruction": "স্ত্রী কাঁকড়া (ডিমওয়ালা) এবং নির্ধারিত ওজনের চেয়ে ছোট কাঁকড়া ধরা নিষিদ্ধ।"
+  },
+  "illegal_golpata": {
+    "label": "illegal_golpata",
+    "bengali_name": "অনুমোদনহীন গোলপাতা কর্তন",
+    "scientific_name": "Nypa fruticans",
+    "category": "forest_resource",
+    "legal_status": "PERMIT_REQUIRED",
+    "act_name": "বন আইন, ১৯২৭",
+    "section": "ধারা ২৬",
+    "punishment": "জরিমানা ও সংগৃহীত গোলপাতাসহ নৌকা বাজেয়াপ্ত।",
+    "action_instruction": "বন বিভাগের বৈধ পাস ও নির্দিষ্ট মৌসুম ব্যতীত গোলপাতা কাটা অবৈধ।"
+  },
+  "undersized_mud_crab": {
+    "label": "undersized_mud_crab",
+    "bengali_name": "ছোট সাইজের শিলা কাঁকড়া",
+    "scientific_name": "Scylla serrata (Undersized)",
+    "category": "crustacean",
+    "legal_status": "SEASONAL_SIZE_LIMIT",
+    "act_name": "মৎস্য সংরক্ষণ বিধিমালা ও বন প্রজ্ঞাপন",
+    "section": "বিধিমালা ৮",
+    "punishment": "কাঁকড়া জব্দ ও অর্থদণ্ড।",
+    "action_instruction": "স্ত্রী কাঁকড়া (ডিমওয়ালা) এবং নির্ধারিত ওজনের চেয়ে ছোট কাঁকড়া ধরা নিষিদ্ধ।"
   }
 }

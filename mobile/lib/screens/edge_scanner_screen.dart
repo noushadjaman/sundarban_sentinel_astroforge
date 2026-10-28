@@ -3,11 +3,16 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
+import '../models/incident_report.dart';
+import '../models/wildlife_law.dart';
 import '../services/classifier_service.dart';
 import '../services/sync_service.dart';
 import '../services/location_service.dart';
 import '../services/legal_registry_service.dart';
-import '../models/wildlife_law.dart';
+import '../services/profile_service.dart';
+import '../widgets/incident_detail_sheet.dart';
+import '../widgets/profile_setup_dialog.dart';
+import 'main_scaffold.dart';
 
 class EdgeScannerScreen extends StatefulWidget {
   final ClassifierService classifierService;
@@ -36,6 +41,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
 
   bool _isSaving = false;
   String? _statusBanner;
+  IncidentReport? _lastLoggedReport;
 
   @override
   void initState() {
@@ -136,10 +142,35 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
   Future<void> _saveAndSync() async {
     if (_selectedImageBytes == null || _detections.isEmpty) return;
 
+    // Profile Setup Requirement during Incident Reporting
+    final profileService = ProfileService();
+    if (!profileService.isProfileComplete) {
+      final profile = await ProfileSetupDialog.show(
+        context,
+        profileService: profileService,
+        reason: 'Profile setup required to log incident & claim conservation bounty.',
+      );
+      if (profile == null || profile.name.trim().isEmpty || profile.phone.trim().isEmpty) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xFFFF9100),
+            content: Text(
+              'Profile required: Name and Phone Number are needed for wildlife conservation reward payouts.',
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ),
+        );
+        return;
+      }
+    }
+
     setState(() => _isSaving = true);
     try {
       final location = await widget.locationService.getCurrentLocation();
       final topDetection = _detections.first;
+      final currentProfile = profileService.currentProfile;
+      final reward = profileService.calculateRewardBdt(topDetection.label);
 
       final report = await widget.syncService.saveReportLocally(
         lat: location.latitude,
@@ -148,24 +179,41 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
         confidence: topDetection.confidence,
         imageBytes: _selectedImageBytes!,
         notes: _notesController.text.trim(),
+        reporterName: currentProfile?.name,
+        reporterPhone: currentProfile?.phone,
+        rewardAmountBdt: reward,
       );
 
       if (!mounted) return;
       setState(() {
         _isSaving = false;
+        _lastLoggedReport = report;
         _statusBanner = report.isSynced
-            ? '✓ INCIDENT LOGGED & SYNCED TO FIRESTORE'
-            : '✓ CACHED LOCALLY IN OFFLINE HIVE VAULT (PENDING SYNC)';
+            ? '✓ INCIDENT LOGGED & SYNCED • +৳$reward REWARD CLAIMED'
+            : '✓ CACHED LOCALLY • +৳$reward REWARD RECORDED (PENDING SYNC)';
       });
+
+      // Instantly load and display the full incident report ticket modal!
+      IncidentDetailSheet.show(
+        context,
+        report: report,
+        syncService: widget.syncService,
+        onViewInVault: () => MainScaffold.switchToTab(context, 2),
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: const Color(0xFF00E676),
           content: Text(
             report.isSynced
-                ? 'Incident report synced to Ranger Central Cloud!'
-                : 'Incident safely committed to on-device offline storage!',
+                ? 'Incident logged! +৳$reward BDT Conservation Bounty claimed!'
+                : 'Incident cached locally! +৳$reward BDT Bounty linked to ${report.reporterPhone}',
             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          action: SnackBarAction(
+            label: 'VIEW REWARDS',
+            textColor: Colors.black,
+            onPressed: () => MainScaffold.switchToTab(context, 4),
           ),
         ),
       );
@@ -199,7 +247,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                 Icon(Icons.radar, color: Color(0xFF00E676), size: 20),
                 SizedBox(width: 8),
                 Text(
-                  'EDGE AI SENTINEL',
+                  'WILDLIFE SENTINEL',
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     letterSpacing: 1.2,
@@ -222,7 +270,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                 ),
                 const SizedBox(width: 6),
                 const Text(
-                  '100% OFFLINE EDGE MODE • INT8 YOLOv8',
+                  'REAL-TIME WILDLIFE PROTECTION ACTIVE',
                   style: TextStyle(
                     fontSize: 9,
                     letterSpacing: 0.8,
@@ -252,6 +300,123 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Instant Loaded Report Ticket Card (Loads immediately after making a report)
+            if (_lastLoggedReport != null)
+              Container(
+                margin: const EdgeInsets.only(bottom: 14),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF0F261B),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: _lastLoggedReport!.isSynced
+                        ? const Color(0xFF00E676)
+                        : const Color(0xFFFF9100),
+                    width: 1.4,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF00E676).withValues(alpha: 0.15),
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF00E676).withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.assignment_turned_in_rounded,
+                            color: Color(0xFF00E676), size: 24),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                'INCIDENT REPORT LOADED',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 0.8,
+                                  color: Color(0xFF00E676),
+                                ),
+                              ),
+                              const Spacer(),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: _lastLoggedReport!.isSynced
+                                      ? const Color(0xFF00E676).withValues(alpha: 0.2)
+                                      : const Color(0xFFFF9100).withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  _lastLoggedReport!.isSynced ? 'SYNCED' : 'BUFFERED',
+                                  style: TextStyle(
+                                    fontSize: 8.5,
+                                    fontWeight: FontWeight.bold,
+                                    color: _lastLoggedReport!.isSynced
+                                        ? const Color(0xFF00E676)
+                                        : const Color(0xFFFF9100),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            '${_lastLoggedReport!.label.toUpperCase()} (${(_lastLoggedReport!.confidence * 100).toStringAsFixed(1)}%)',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            _lastLoggedReport!.id,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontFamily: 'monospace',
+                              color: Colors.white54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        IncidentDetailSheet.show(
+                          context,
+                          report: _lastLoggedReport!,
+                          syncService: widget.syncService,
+                          onViewInVault: () => MainScaffold.switchToTab(context, 2),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF00E676),
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        visualDensity: VisualDensity.compact,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      child: const Text('OPEN',
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                    ),
+                  ],
+                ),
+              ),
+
             // Status banner if saved
             if (_statusBanner != null)
               Container(
@@ -336,7 +501,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                             ),
                             const SizedBox(height: 14),
                             const Text(
-                              'LIVE CAMERA VIEWFINDER READY',
+                              'READY TO SCAN',
                               style: TextStyle(
                                 fontSize: 13,
                                 letterSpacing: 1.2,
@@ -346,7 +511,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                             ),
                             const SizedBox(height: 6),
                             const Text(
-                              'Capture live feed or pick photo to trigger INT8 edge detection',
+                              'Take a photo or choose from gallery to identify wildlife & threats',
                               style: TextStyle(fontSize: 11, color: Colors.white38),
                             ),
                             const SizedBox(height: 16),
@@ -407,10 +572,10 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Icon(Icons.speed, size: 13, color: Color(0xFF00E5FF)),
+                                  const Icon(Icons.flash_on, size: 13, color: Color(0xFF00E5FF)),
                                   const SizedBox(width: 5),
                                   Text(
-                                    'INFERENCE: ${_inferenceTimeMs}ms (640x640 INT8)',
+                                    'RESPONSE: ${_inferenceTimeMs}ms',
                                     style: const TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
@@ -466,7 +631,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                               ),
                               SizedBox(height: 14),
                               Text(
-                                'RUNNING INT8 YOLOv8 TFLITE ENGINE...',
+                                'IDENTIFYING SPECIES & THREATS...',
                                 style: TextStyle(
                                   fontSize: 11,
                                   color: Colors.white,
@@ -476,8 +641,8 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Input: [1, 640, 640, 3] • NMS: IoU ≥ 0.45',
-                                style: TextStyle(fontSize: 10, color: Colors.white54),
+                                'Scanning against Sundarban wildlife database...',
+                                style: TextStyle(fontSize: 10, color: Color(0xFF81C784)),
                               ),
                             ],
                           ),
@@ -501,7 +666,7 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
               child: Row(
                 children: [
                   const Text(
-                    'TEST:',
+                    'SAMPLE SCANS:',
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
@@ -576,8 +741,8 @@ class _EdgeScannerScreenState extends State<EdgeScannerScreen> {
                     : const Icon(Icons.save_alt, color: Colors.black),
                 label: Text(
                   _isSaving
-                      ? 'CACHING OFFLINE TO HIVE...'
-                      : 'LOG INCIDENT TO LOCAL HIVE VAULT',
+                      ? 'RECORDING REPORT...'
+                      : 'SUBMIT INCIDENT REPORT',
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,

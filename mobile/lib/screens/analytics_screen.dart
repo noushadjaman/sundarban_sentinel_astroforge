@@ -99,17 +99,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'DISTRIBUTED PIPELINE STATUS',
+                          'SYSTEM CONNECTIVITY STATUS',
                           style: TextStyle(fontSize: 11, letterSpacing: 1.2, fontWeight: FontWeight.bold, color: Colors.white54),
                         ),
                         const SizedBox(height: 12),
                         Row(
                           children: [
-                            _buildPipelinePill('NASA CMR Search', true),
+                            _buildPipelinePill('Satellite Feeds', true),
                             const SizedBox(width: 8),
-                            _buildPipelinePill('Worker Gateway', _gatewayOnline || _zones.isNotEmpty),
+                            _buildPipelinePill('Cloud Gateway', _gatewayOnline || _zones.isNotEmpty),
                             const SizedBox(width: 8),
-                            _buildPipelinePill('Cloudinary CDN', true),
+                            _buildPipelinePill('Media Storage', true),
                           ],
                         ),
                       ],
@@ -119,7 +119,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   const SizedBox(height: 18),
 
                   const Text(
-                    'SATELLITE & SENSOR METRICS',
+                    'FOREST RISK & SENSOR METRICS',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.1, color: Colors.white70),
                   ),
                   const SizedBox(height: 10),
@@ -128,17 +128,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   Row(
                     children: [
                       _buildMetricCard(
-                        'Active NDVI Anomalies',
+                        'Active Forest Risks',
                         '${_zones.length}',
-                        'Threshold: < -0.15',
+                        'Canopy Loss & Stress',
                         Icons.warning_amber_rounded,
                         const Color(0xFFFF5252),
                       ),
                       const SizedBox(width: 12),
                       _buildMetricCard(
-                        'MODIS Product',
-                        'MOD13Q1',
-                        '250m / 16-Day',
+                        'Satellite Coverage',
+                        'Active',
+                        'Daily Mangrove Telemetry',
                         Icons.satellite_alt,
                         const Color(0xFF00E5FF),
                       ),
@@ -148,10 +148,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   Row(
                     children: [
                       _buildMetricCard(
-                        'Edge AI Reports',
+                        'Field Reports',
                         '${reports.length}',
                         '$syncedReports Synced • $pendingReports Buffered',
-                        Icons.psychology,
+                        Icons.assignment_turned_in_rounded,
                         const Color(0xFF00E676),
                       ),
                       const SizedBox(width: 12),
